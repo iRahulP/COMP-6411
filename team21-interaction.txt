@@ -64,10 +64,10 @@ L = ['Bladerunner'].
 6. Which type, if any, implements interface 'Behavior2'?
 
 Non-Ground Query
-?- implements(X,'Behaviour2').
+?- implements(X,'Behavior2').
 X = 'Android2'.
 
-?- findall(X,implements(X,'Behaviour2'),L).
+?- findall(X,implements(X,'Behavior2'),L).
 L = ['Android2'].
 
 ?- 

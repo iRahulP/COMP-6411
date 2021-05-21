@@ -1,0 +1,64 @@
+1. What classes, if any, are present in the program? 
+Query Type - Non-Ground Query
+
+?- class(Type).
+Type = 'Human' ;
+Type = 'Bladerunner' ;
+Type = 'Machine' ;
+Type = 'Android' ;
+Type = 'Android2'.
+
+?- findall(Type, class(Type),  List).
+List = [ 'Human', 'Bladerunner', 'Machine', 'Android', 'Android2' ].
+
+
+
+2. What methods, if any, does class 'Human' define? 
+Query Type - Non-Ground Query
+
+?- defines('Human', Feature , method, _).
+Feature = 'act()' ;
+Feature = 'reason()' ;
+Feature = 'hasEmpathy()'
+
+?- findall( Feature , defines('Human', Feature, method, _), List).
+List = [ 'act()', 'reason()', 'hasEmpathy()' ].
+
+
+
+3. Does class 'Android' define an attribute named 'version'? 
+Query Type - Ground Query
+
+?- defines('Android', version ,attribute, _).
+true.
+
+
+
+4. Does class 'Machine' define a method named 'hasMemories()'? 
+Query Type - Ground Query
+
+?- defines('Machine', 'hasMemories()', method, _).
+false.
+
+
+
+5. Which class, if any, extends class 'Human'? 
+Query Type - Non-Ground Query
+
+?- extends(Class, 'Human').
+Class = 'Bladerunner'.
+
+?- findall(Class, extends(Class, 'Human'), List).
+List = ['Bladerunner'].
+
+
+
+6. Which type, if any, implements interface 'Behavior2'?
+Query Type - Non-Ground Query
+
+?- implements(Type, 'Behavior2').
+Type = 'Android2'.
+	
+?- findall(Type, implements(Type, 'Behavior2'), List).
+List = ['Android2'].
+
