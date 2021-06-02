@@ -7,3 +7,26 @@
 
 		Base Case: If list is empty, then return element 
 		Recursive Case: return head of list and recur on tail of list. 
+
+CL-USER 8 : 2 > (consR '(a b c) 'd)
+(A B C D)
+
+
+2.
+	CL-USER 9 : 2 > (combine 2 3 4)
+	9
+
+	CL-USER 10 : 2 > (combine '(a b) '(c d))
+	(A B C D)
+
+
+3.
+	CL-USER 11 : 2 > (combine-max '(4 6 8 9 2) '(5 1))
+	(5 6 8 9 2)
+
+	CL-USER 12 : 2 > (combine-max '(3 4 5) '(1 2 3))
+	(3 4 5)
+
+4.
+	CL-USER 13 : 2 > (dist 'a '(b c d))
+	((A B) (A C) (A D))
