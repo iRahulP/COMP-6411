@@ -3,33 +3,27 @@
 		function consR takes as arguments a list and an element, and returns a list with the element placed at right of the existing list.
 
 		consR(L,e) = cons(elt,L), for L = NIL
-		consR(L,e) = cons(car(L), consR(cdr(L),elt)), for L != NIL 
+		consR(L,e) = cons(car(L), consR(cdr(L),elt)).
 
 		Base Case: If list is empty, then return element 
 		Recursive Case: return head of list and recur on tail of list. 
 
-CL-USER 8 : 2 > (consR '(a b c) 'd)
-(A B C D)
-
-
-2.
-	CL-USER 9 : 2 > (combine 2 3 4)
-	9
-
-	CL-USER 10 : 2 > (combine '(a b) '(c d))
-	(A B C D)
-
-
-3.
-	CL-USER 11 : 2 > (combine-max '(4 6 8 9 2) '(5 1))
-	(5 6 8 9 2)
-
-	CL-USER 12 : 2 > (combine-max '(3 4 5) '(1 2 3))
-	(3 4 5)
-
 4.
-	CL-USER 13 : 2 > (dist 'a '(b c d))
-	((A B) (A C) (A D))
+	a. 
+		dist(e,L) = NIL, for L = NIL
+		dist(e,L) = cons(list(e,car(L)), dist(e,cdr(L))).
+
+	b. Unfolding the definition for dist(w,<x,y>).
+		dist(w,<x,y>)
+			=<<w,x>,dist(w,<y>)>
+			=<<w,x>,<w,y>,dist(w,<>)>
+			=<<w,x>,<w,y>>
+
+	c. function definition:
+		function dist takes as arguments an element n and a list lst, and returns a list composed of lists of two elements as n and eaxh successive element of list	lst respectively.	
+
+		Base Case: If list is empty, then return null.
+		Recursive Case: return a list with pair as the element n and the first element of list lst and recur on tail of list.
 
 	d. Tracing the execution of function dist for (dist 'a '(b c d)) :
 		(dist 'a '(b c d))
@@ -38,3 +32,15 @@ CL-USER 8 : 2 > (consR '(a b c) 'd)
 			= (cons '(a b) '(a c) '(a d) (dist 'a '()))
 			= (cons '(a b) '(a c) '(a d))
 			= ((a b) (a c) (a d))
+
+7. 
+	Tracing the execution of the function for (filter '(12 9 3 2 7) '4)
+	(filter '(12 9 3 2 7) '4)
+		= (cons '12 (filter '(9 3 2 7) '4))
+		= (cons '12 (cons '9 (filter '(3 2 7) '4)))
+		= (cons '12 (cons '9 (filter '(2 7) '4)))
+		= (cons '12 (cons '9 (filter '(7) '4)))
+		= (cons '12 (cons '9 (cons '7 (filter '() '4))))
+		= (cons '12 (cons '9 (cons '7 '())))
+		= (12 9 7)
+	

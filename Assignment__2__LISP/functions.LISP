@@ -43,7 +43,7 @@
   (return-from oseq newlist))
 
 (defun filter (lst elt)
-  (cond ((not (listp lst)) nil)
+  (cond ((not (listp lst)) '())
         ((not (integerp elt)) nil)
         ((null lst) nil)
         ((not (> elt 0)) nil)
