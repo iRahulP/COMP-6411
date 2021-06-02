@@ -23,9 +23,13 @@
         (t (cons (list n (car lst)) (dist n (cdr lst))))
 ))
 
-(defun oseq (n)
-  (setq newlist '())
-  (loop for i from 0 to (- n 1) do
-        (if (oddp i)
-            (append newlist i)))
-)
+(defun remove-elt (elt lst)
+  (cond ((null lst) nil)
+        ((equal (car lst) elt) (remove-elt elt (cdr lst)))
+        (t (cons (car lst) (remove-elt elt (cdr lst))))))
+
+
+(defun rem-if-dupl (lst)
+  (cond ((null lst) nil)
+        ((member (car lst) (cdr lst)) (remove-elt (car lst) lst))
+        (t (cons (car lst) (rem-if-dupl (cdr lst))))))

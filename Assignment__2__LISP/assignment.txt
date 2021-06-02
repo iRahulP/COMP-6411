@@ -31,8 +31,7 @@ CL-USER 8 : 2 > (consR '(a b c) 'd)
 	CL-USER 13 : 2 > (dist 'a '(b c d))
 	((A B) (A C) (A D))
 
-
-	d.
+	d. Tracing the execution of function dist for (dist 'a '(b c d)) :
 		(dist 'a '(b c d))
 			= (cons '(a b) (dist 'a '(c d)))
 			= (cons '(a b) '(a c) (dist 'a '(d)))
