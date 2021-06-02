@@ -1,0 +1,9 @@
+1. 
+	a.
+		function consR takes as arguments a list and an element, and returns a list with the element placed at right of the existing list.
+
+		consR(L,e) = cons(elt,L), for L = NIL
+		consR(L,e) = cons(car(L), consR(cdr(L),elt)), for L != NIL 
+
+		Base Case: If list is empty, then return element 
+		Recursive Case: return head of list and recur on tail of list. 
