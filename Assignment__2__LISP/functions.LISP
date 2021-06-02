@@ -23,3 +23,9 @@
         (t (cons (list n (car lst)) (dist n (cdr lst))))
 ))
 
+(defun oseq (n)
+  (setq newlist '())
+  (loop for i from 0 to (- n 1) do
+        (if (oddp i)
+            (append newlist i)))
+)
