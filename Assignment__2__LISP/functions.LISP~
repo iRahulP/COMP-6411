@@ -23,9 +23,86 @@
         (t (cons (list n (car lst)) (dist n (cdr lst))))
 ))
 
+(defun remove-all-occurences (elt lst)
+  (cond ((null lst) nil)
+        ((equal (car lst) elt) (remove-all-occurences elt (cdr lst)))
+        (t (cons (car lst) (remove-all-occurences elt (cdr lst))))))
+
+(defun member2 (item lst)
+  (if lst
+      (if (eql item (car lst))
+          T
+          (member2 item (cdr lst)))))
+
+(defun rem-if-dupl (lst)
+  (cond ((null lst) nil)
+        ((member2 (car lst) (cdr lst)) (remove-all-occurences (car lst) lst))
+        (t (cons (car lst) (rem-if-dupl (cdr lst))))))
+
 (defun oseq (n)
+  (if (not (integerp n))
+      (return-from oseq nil))
   (setq newlist '())
   (loop for i from 0 to (- n 1) do
         (if (oddp i)
-            (append newlist i)))
+            (setq newlist (consR newlist i))))
+  (return-from oseq newlist))
+
+(defun filter (lst elt)
+  (cond ((not (listp lst)) '())
+        ((not (integerp elt)) nil)
+        ((null lst) nil)
+        ((not (> elt 0)) nil)
+        ((> (car lst) elt) (cons (car lst) (filter (cdr lst) elt)))
+        (t (filter (cdr lst) elt))
+))
+
+
+(defun is-valid-bst (tree)
+    (let ((root (car tree)))
+    (let ((left-sub-tree-node-key (car (car (cdr tree)))))
+    (let ((right-sub-tree-node-key (car (car (cdr (cdr tree))))))
+    (let ((left-sub-tree (car (cdr tree))))
+    (let ((right-sub-tree (car (cdr (cdr tree)))))
+         
+         (if (and (not (eq left-sub-tree () )) (not (eq right-sub-tree () )))
+             (if (and (>= root left-sub-tree-node-key)  (< root right-sub-tree-node-key))
+                 (progn
+                     (is-valid-bst left-sub-tree)
+                     (is-valid-bst right-sub-tree)
+                 )            
+                 (setq result 1)              
+             )         
+         )         
+                  
+         (if  (and (not (eq left-sub-tree () ))  (eq right-sub-tree () ))
+             (if (>= root left-sub-tree-node-key) 
+                 (is-valid-bst left-sub-tree)         
+                 (setq result 1) 
+             )          
+         )         
+                    
+         (if (and (eq left-sub-tree () ) (not (eq right-sub-tree () )))
+             (if (< root right-sub-tree-node-key)         
+                 (is-valid-bst right-sub-tree) 
+                 (setq result 1)
+             )
+         )           
+         
+          (if (and (eq left-sub-tree () ) (eq right-sub-tree () ))
+              (return-from is-valid-bst)
+          )         
+     ) ) ) ) )
+)
+
+
+(defun is-bst (tree)
+    (progn
+        (setq result 0)        
+        (is-valid-bst tree )
+        (if (= result 0)
+            (write "YES")
+            (write "NO")
+        )    
+    )
 )
