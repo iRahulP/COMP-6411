@@ -122,3 +122,23 @@
         
      ) ) )
 )
+
+( defun max1 (a b)
+    (if (> a b)
+        a b
+    ))
+
+(defun tree-height (tree)
+    
+  (let ((left-sub-tree (car (cdr tree))))
+  (let ((right-sub-tree (car (cdr (cdr tree)))))
+
+  (cond 
+       ((null tree) 0)
+       (t (+ 1 (max1 (tree-height left-sub-tree) (tree-height right-sub-tree)  )  ) )
+  )
+  ))
+)
+
+
+;Test : (tree-height  '(40 (30 (25 () ())(35 () ()))(60 (50 () ())())))

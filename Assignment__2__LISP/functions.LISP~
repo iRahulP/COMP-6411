@@ -57,7 +57,6 @@
         (t (filter (cdr lst) elt))
 ))
 
-
 (defun is-valid-bst (tree)
     (let ((root (car tree)))
     (let ((left-sub-tree-node-key (car (car (cdr tree)))))
@@ -101,8 +100,25 @@
         (setq result 0)        
         (is-valid-bst tree )
         (if (= result 0)
-            (write "YES")
-            (write "NO")
+            (return-from  is-bst "YES")
+            (return-from is-bst "NO")
         )    
     )
+)
+
+
+(defun post-order-traversal (tree)
+    (let ((root (car tree)))
+    (let ((left-sub-tree (car (cdr tree))))
+    (let ((right-sub-tree (car (cdr (cdr tree)))))
+         
+         (if (not (eq tree () ))
+                 (append
+                     (post-order-traversal left-sub-tree)
+                     (post-order-traversal right-sub-tree)
+           (list root)
+                 )                      
+         )                   
+        
+     ) ) )
 )
