@@ -43,9 +43,16 @@
 		= (cons '12 (cons '9 (cons '7 (filter '() '4))))
 		= (cons '12 (cons '9 (cons '7 '())))
 		= (12 9 7)
-	
 
-	(defun consR (l e)
-  (cond ((null l) (cons e nil))
-        (t (cons (car l) (consR (cdr l) e)))
-))
+
+9.
+	a. Recursive defnition of a procedure to calculate the height of the tree.
+		height(tree) = 0, for tree = NIL
+		height(tree) = 1 + max( height(left-sub-tree) height(right-sub-tree) )
+
+		where, left-sub-tree = (car (cdr tree))
+			   right-sub-tree = (car (cdr (cdr tree)))
+
+		Base Case: if tree is null, then return 0 
+		Recursive Case: return 1 plus the maximum height among the left and right sub tree of current root 
+		
