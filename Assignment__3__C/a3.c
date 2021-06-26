@@ -121,9 +121,7 @@ list cdr(element e)
     {
         return NIL;
     }
-    //fetches el of the e as list
-    e = e.l->el;
-    return e.l;
+    return e.l->next;
 }
 
 // Question 7
@@ -136,7 +134,7 @@ list cddr(element e)
     
     list temp = malloc(sizeof(list));
     temp = cdr(e);
-    return temp.next;
+    return temp->next;
 }
 
 
