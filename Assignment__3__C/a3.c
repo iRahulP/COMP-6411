@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef enum
 {
@@ -15,7 +16,7 @@ typedef struct
     union
     {
         atom a;
-        struct _listnode* l;
+        struct _listnode *l;
     };
 } element;
 
@@ -44,66 +45,50 @@ element lasel(list l)
     return ne;
 }
 
-
 // Question 3
 list cons(element e, list l)
 {
-    //printf("In Cons ");
-    list li = malloc(sizeof(list));
+    list nl = malloc(sizeof(list));
+    nl->el = e;
 
-    li->el = e;
-    li->next = l;
+    if (l != NULL)
+        nl->next = l;
 
-    return li;
+    return nl;
 }
-
 
 // Question 4
 list append(list l1, list l2)
 {
-    element e;
-    list l_append = NULL;
-    l_append = malloc(sizeof(list));
+    list l_append = malloc(sizeof(list));
+    list curr = l_append; // Points to last node in the new list.
 
-    list res = l_append;
-
-    while(l1 != NULL )
+    while (l1 != NULL)
     {
-        l_append->el = l1->el;
+        curr->el = l1->el;
+        curr->next = malloc(sizeof(list));
+
         l1 = l1->next;
-        list temp = malloc(sizeof(list));
-        l_append->next = temp;
-        l_append = l_append->next;
+        curr = curr->next;
     }
 
-    while(l2 != NULL )
+    while (l2 != NULL)
     {
-        l_append->el = l2->el;
+        curr->el = l2->el;
+        if (l2->next != NULL)
+            curr->next = malloc(sizeof(list));
+
         l2 = l2->next;
-        list temp = malloc(sizeof(list));
-        l_append->next = temp;
-        l_append = l_append->next;
+        curr = curr->next;
     }
 
-    return res;
-
-
-    // res = l1;
-    // list temp = res;
-    // while(temp->next != NULL)
-    // {
-    //     temp = temp->next;
-    // }
-    // temp->next = l2;
-
-    // return res;
+    return l_append;
 }
-
 
 // Question 5
 element car(element e)
 {
-    if(e.type == ATOM)
+    if (e.type == ATOM)
     {
         return NIL;
     }
@@ -113,37 +98,39 @@ element car(element e)
     }
 }
 
-
 // Question 6
 list cdr(element e)
 {
-	if(e.type == ATOM)
+    if (e.l != NULL)
     {
-        return NIL;
+        list li = e.l->next;
+        return li;
     }
-    return e.l->next;
+    else
+    {
+        return NULL;
+    }
 }
 
 // Question 7
 list cddr(element e)
 {
-	if(e.type == ATOM)
-    {
-        return NIL;
-    }
-    
-    list temp = malloc(sizeof(list));
-    temp = cdr(e);
-    return temp->next;
-}
+    list li = e.l->next;
 
+    if (li == NULL || li->next == NULL)
+    {
+        return NULL;
+    }
+
+    return li->next;
+}
 
 // Question 8
 void print(element e)
 {
     if (e.type == ATOM)
     {
-        printf(" %c \n", e.a);
+        printf(" %c ", e.a);
     }
     else if (e.l == NULL)
     {
@@ -151,21 +138,57 @@ void print(element e)
     }
     else
     {
-        //TODO: Recursively print list;
+        printf("(");
+        list curr = e.l;
+        while (curr != NULL)
+        {
+            print(curr->el);
+            curr = curr->next;
+        }
+        printf(")");
     }
 }
 
+//Question 9
+void freel(list l)
+{
+    if (l->el.type == LIST)
+    {
+        // printf("Calling free \n");
+        freel(l->el.l);
+    }
 
+    if (l->next != NULL)
+    {
+        // printf("Calling free \n");
+        freel(l->next);
+    }
+
+    free(l->next);
+}
 
 int main()
 {
-    printf("\n-------- Start ---------- \n");
-    element e1 = {.a = 'A', .type = ATOM};
-    element e2 = aasel('C');
+    element ea = aasel('a');
+    element eb = aasel('b');
+    element ec = aasel('c');
+    element ed = aasel('d');
+    element ee = aasel('e');
 
-    print(e1);
-    print(e2);
+    list lb = cons(eb, cons(ec, NULL));
+    element nested = lasel(lb);
+    element theList = lasel(cons(ea, cons(nested, cons(ed, cons(ee, NULL)))));
 
-    printf("\n-------- End ---------- \n");
+    print(theList);
+    printf("\n");
+    print(car(theList));
+    printf("\n");
+    print(lasel(cdr(theList)));
+    printf("\n");
+    print(car(car(theList)));
+    printf("\n");
+
+    freel(theList.l);
+
     return 0;
 }
